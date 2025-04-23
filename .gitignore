@@ -1,0 +1,41 @@
+# IntelliJ IDEA
+.idea/
+*.iml
+*.iws
+out/
+
+# Sistema operacional
+.DS_Store
+Thumbs.db
+
+# Diretório de build do Maven
+/target/
+
+# Diretório do Maven Wrapper
+.mvn/
+!/.mvn/wrapper/maven-wrapper.jar
+
+# Arquivos de configuração local
+application-local.properties
+application-dev.properties
+.env
+
+# Logs
+*.log
+spring.log
+
+# Arquivos temporários e backups
+*.tmp
+*.swp
+*~
+*.bak
+
+# Arquivos de teste
+test-output/
+
+# Cobertura de testes (ex: JaCoCo)
+coverage/
+jacoco.exec
+
+# Outras pastas não relevantes
+node_modules/
