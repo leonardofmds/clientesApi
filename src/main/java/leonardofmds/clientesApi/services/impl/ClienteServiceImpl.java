@@ -2,6 +2,7 @@ package leonardofmds.clientesApi.services.impl;
 
 import leonardofmds.clientesApi.dtos.ClienteRequestDto;
 import leonardofmds.clientesApi.dtos.ClienteResponseDto;
+import leonardofmds.clientesApi.dtos.EnderecoResponseDto;
 import leonardofmds.clientesApi.entities.Cliente;
 import leonardofmds.clientesApi.entities.Endereco;
 import leonardofmds.clientesApi.repositories.ClienteRepository;
@@ -13,6 +14,8 @@ import org.springframework.stereotype.Service;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 public class ClienteServiceImpl implements ClienteService {
 
@@ -27,14 +30,22 @@ public class ClienteServiceImpl implements ClienteService {
         BeanUtils.copyProperties(request.getEndereco(),endereco);
         BeanUtils.copyProperties(request,cliente);
         cliente.setDataNascimento(new SimpleDateFormat("dd/MM/yyyy").parse(request.getDataNascimento())); //capturando o campo data;
+
+
+        endereco.setCliente(cliente);
         cliente.setEnderecos(new ArrayList<Endereco>());
         cliente.getEnderecos().add(endereco);
 
-        clienteRepository.save(cliente);
-
         ClienteResponseDto response = new ClienteResponseDto();
-        BeanUtils.copyProperties(cliente,response);
+        BeanUtils.copyProperties(clienteRepository.save(cliente), response);
         response.setDataNascimento(new SimpleDateFormat("dd/MM/yyyy").format(cliente.getDataNascimento()));
+        response.setEnderecos(new ArrayList<EnderecoResponseDto>());
+
+        for (Endereco e : cliente.getEnderecos()) {
+            EnderecoResponseDto enderecoResponseDto = new EnderecoResponseDto();
+            BeanUtils.copyProperties(e, enderecoResponseDto);
+            response.getEnderecos().add(enderecoResponseDto);
+        }
 
         return response;
     }

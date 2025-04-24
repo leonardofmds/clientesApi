@@ -1,6 +1,5 @@
 package leonardofmds.clientesApi.dtos;
 
-import leonardofmds.clientesApi.entities.Endereco;
 import lombok.Data;
 
 import java.util.List;
