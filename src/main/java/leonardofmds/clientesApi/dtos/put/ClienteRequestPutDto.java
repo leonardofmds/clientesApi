@@ -1,16 +1,20 @@
-package leonardofmds.clientesApi.dtos;
+package leonardofmds.clientesApi.dtos.put;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
-import leonardofmds.clientesApi.entities.Endereco;
 import lombok.Data;
 
 import java.util.UUID;
 
 @Data
-public class ClienteRequestDto {
+public class ClienteRequestPutDto {
+
+    @NotEmpty
+    @Pattern(regexp = "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$",
+            message = "ID inválido")
+    private String id;
 
     @NotEmpty
     @Size(min = 8, max = 100, message = "Informe um nome de 8 a 100 caracteres.")
@@ -29,7 +33,7 @@ public class ClienteRequestDto {
             message = "Por favor, informe a data no formato dd/MM/yyyy.")
     private String dataNascimento;
 
-    private EnderecoRequestDto endereco;
+    private EnderecoRequestPutDto endereco;
 
 
 }
