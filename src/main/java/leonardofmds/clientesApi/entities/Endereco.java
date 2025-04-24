@@ -18,18 +18,25 @@ public class Endereco {
     @Id
     private UUID id;
 
+    @Column(length = 150, nullable = false)
     private String logradouro;
 
+    @Column(length = 150)
     private String complemento;
 
+    @Column(length = 10)
     private String numero;
 
+    @Column(length = 150)
     private String bairro;
 
+    @Column(length = 150)
     private String cidade;
 
+    @Column(length = 2)
     private String uf;
 
+    @Column(length = 8)
     private String cep;
 
     @ManyToOne
