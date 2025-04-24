@@ -1,16 +1,17 @@
 package leonardofmds.clientesApi.services.interfaces;
 
-import leonardofmds.clientesApi.dtos.ClienteRequestDto;
+import leonardofmds.clientesApi.dtos.post.ClienteRequestDto;
 import leonardofmds.clientesApi.dtos.ClienteResponseDto;
-import org.springframework.stereotype.Service;
+import leonardofmds.clientesApi.dtos.put.ClienteRequestPutDto;
 
 import java.util.List;
+import java.util.UUID;
 
 public interface ClienteService {
 
     ClienteResponseDto cadastrar(ClienteRequestDto request) throws Exception;
 
-    ClienteResponseDto atualizar(String id, ClienteRequestDto request) throws Exception;
+    ClienteResponseDto atualizar(ClienteRequestPutDto request) throws Exception;
 
     ClienteResponseDto excluir(String id) throws Exception;
 

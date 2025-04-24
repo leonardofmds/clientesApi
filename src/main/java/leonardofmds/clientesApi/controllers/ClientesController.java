@@ -1,9 +1,9 @@
 package leonardofmds.clientesApi.controllers;
 
 import jakarta.validation.Valid;
-import leonardofmds.clientesApi.dtos.ClienteRequestDto;
+import leonardofmds.clientesApi.dtos.post.ClienteRequestDto;
 import leonardofmds.clientesApi.dtos.ClienteResponseDto;
-import leonardofmds.clientesApi.services.impl.ClienteServiceImpl;
+import leonardofmds.clientesApi.dtos.put.ClienteRequestPutDto;
 import leonardofmds.clientesApi.services.interfaces.ClienteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -18,9 +18,10 @@ public class ClientesController {
     public ClienteResponseDto criarCliente(@RequestBody @Valid ClienteRequestDto request) throws Exception {
         return clienteService.cadastrar(request);
     }
-    @PutMapping("/{id}")
-    public String atualizarCliente() {
-        return "Cliente atualizado com sucesso!";
+    @PutMapping
+    public ClienteResponseDto atualizarCliente(@RequestBody @Valid ClienteRequestPutDto request) throws Exception {
+        return clienteService.atualizar(request);
+
     }
     @DeleteMapping("/{id}")
     public String deletarCliente() {
