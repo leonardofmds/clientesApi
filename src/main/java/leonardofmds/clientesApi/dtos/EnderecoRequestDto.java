@@ -1,10 +1,12 @@
 package leonardofmds.clientesApi.dtos;
 
+import lombok.Data;
+
 import java.util.UUID;
 
+@Data
 public class EnderecoRequestDto {
 
-    private UUID id;
     private String logradouro;
     private String complemento;
     private String numero;
