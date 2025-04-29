@@ -27,6 +27,10 @@ public class ClienteServiceImpl implements ClienteService {
     @Override
     public ClienteResponseDto cadastrar(ClienteRequestDto request) throws Exception {
 
+        clienteRepository.findByCpf(request.getCpf()).ifPresent(cliente -> {
+            throw new RuntimeException("Cliente já cadastrado com o CPF: " + request.getCpf());
+        });
+
         Cliente cliente = new Cliente();
         Endereco endereco = new Endereco();
         BeanUtils.copyProperties(request.getEndereco(),endereco);
@@ -56,6 +60,12 @@ public class ClienteServiceImpl implements ClienteService {
     public ClienteResponseDto atualizar(ClienteRequestPutDto request) throws Exception {
 
         Cliente cliente = clienteRepository.findById(UUID.fromString(request.getId())).get();
+
+        if(!request.getCpf().equals(cliente.getCpf())){
+            clienteRepository.findByCpf(request.getCpf()).ifPresent(client -> {
+                throw new RuntimeException("Cliente já cadastrado com o CPF: " + request.getCpf());
+            });
+        }
 
         BeanUtils.copyProperties(request, cliente);
         cliente.setDataNascimento(new SimpleDateFormat("dd/MM/yyyy").parse(request.getDataNascimento()));
