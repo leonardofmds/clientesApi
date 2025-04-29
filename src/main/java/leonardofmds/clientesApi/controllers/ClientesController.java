@@ -8,6 +8,9 @@ import leonardofmds.clientesApi.services.interfaces.ClienteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+import java.util.UUID;
+
 @RestController
 @RequestMapping("api/clientes")
 public class ClientesController {
@@ -24,16 +27,18 @@ public class ClientesController {
 
     }
     @DeleteMapping("/{id}")
-    public String deletarCliente() {
-        return "Cliente deletado com sucesso!";
+    public ClienteResponseDto deletarCliente(@PathVariable UUID id) throws Exception {
+        return clienteService.excluir(id);
     }
     @GetMapping
-    public String listarClientes() {
-        return "Lista de clientes";
+    public List<ClienteResponseDto> listarClientes() throws Exception {
+        return clienteService.consultar();
     }
+
     @GetMapping("/{id}")
-    public String obterCliente(@PathVariable int id) {
-        return "Cliente com ID: " + id;
+    public ClienteResponseDto obterCliente(@PathVariable UUID id) throws Exception {
+
+        return clienteService.obter(id);
     }
 
 

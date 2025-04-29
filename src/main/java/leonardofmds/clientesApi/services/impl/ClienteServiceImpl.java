@@ -86,17 +86,64 @@ public class ClienteServiceImpl implements ClienteService {
     }
 
     @Override
-    public ClienteResponseDto excluir(String id) throws Exception {
-        return null;
+    public ClienteResponseDto excluir(UUID id) throws Exception {
+
+        Cliente cliente = clienteRepository.findById(id).orElseThrow(() -> new Exception("Cliente não encontrado"));
+        clienteRepository.delete(cliente);
+
+        ClienteResponseDto response = new ClienteResponseDto();
+        BeanUtils.copyProperties(cliente, response);
+        response.setDataNascimento(new SimpleDateFormat("dd/MM/yyyy").format(cliente.getDataNascimento()));
+        List<EnderecoResponseDto> enderecoDtos = new ArrayList<>();
+        for (Endereco e : cliente.getEnderecos()) {
+            EnderecoResponseDto enderecoResponseDto = new EnderecoResponseDto();
+            BeanUtils.copyProperties(e, enderecoResponseDto);
+            enderecoDtos.add(enderecoResponseDto);
+        }
+        response.setEnderecos(enderecoDtos);
+        return response;
     }
 
     @Override
     public List<ClienteResponseDto> consultar() throws Exception {
-        return List.of();
+        ArrayList<ClienteResponseDto> clientesResponse = new ArrayList<>();
+        List<Cliente> clientes = clienteRepository.findAllOrderByNome();
+
+        if (clientes.isEmpty()) {
+            throw new Exception("Nenhum cliente encontrado");
+        }
+
+        for (Cliente cliente : clientes) {
+            ClienteResponseDto response = new ClienteResponseDto();
+            BeanUtils.copyProperties(cliente, response);
+            response.setDataNascimento(new SimpleDateFormat("dd/MM/yyyy").format(cliente.getDataNascimento()));
+            List<EnderecoResponseDto> enderecoDtos = new ArrayList<>();
+            for (Endereco e : cliente.getEnderecos()) {
+                EnderecoResponseDto enderecoResponseDto = new EnderecoResponseDto();
+                BeanUtils.copyProperties(e, enderecoResponseDto);
+                enderecoDtos.add(enderecoResponseDto);
+            }
+            response.setEnderecos(enderecoDtos);
+            clientesResponse.add(response);
+        }
+
+        return clientesResponse;
     }
 
     @Override
-    public ClienteResponseDto obter(String id) throws Exception {
-        return null;
+    public ClienteResponseDto obter(UUID id) throws Exception {
+
+        Cliente cliente = clienteRepository.findById(id).orElseThrow(() -> new Exception("Cliente não encontrado"));
+        ClienteResponseDto response = new ClienteResponseDto();
+        BeanUtils.copyProperties(cliente, response);
+        response.setDataNascimento(new SimpleDateFormat("dd/MM/yyyy").format(cliente.getDataNascimento()));
+        List<EnderecoResponseDto> enderecoDtos = new ArrayList<>();
+        for (Endereco e : cliente.getEnderecos()) {
+            EnderecoResponseDto enderecoResponseDto = new EnderecoResponseDto();
+            BeanUtils.copyProperties(e, enderecoResponseDto);
+            enderecoDtos.add(enderecoResponseDto);
+        }
+        response.setEnderecos(enderecoDtos);
+        return response;
     }
 }

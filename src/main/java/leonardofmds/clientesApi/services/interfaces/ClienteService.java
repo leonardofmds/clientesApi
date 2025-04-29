@@ -13,9 +13,9 @@ public interface ClienteService {
 
     ClienteResponseDto atualizar(ClienteRequestPutDto request) throws Exception;
 
-    ClienteResponseDto excluir(String id) throws Exception;
+    ClienteResponseDto excluir(UUID id) throws Exception;
 
     List<ClienteResponseDto> consultar() throws Exception;
 
-    ClienteResponseDto obter(String id) throws Exception;
+    ClienteResponseDto obter(UUID id) throws Exception;
 }
