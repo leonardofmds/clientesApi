@@ -1,5 +1,6 @@
 package leonardofmds.clientesApi.services.impl;
 
+import leonardofmds.clientesApi.components.RabbitMQProducerComponent;
 import leonardofmds.clientesApi.dtos.post.ClienteRequestDto;
 import leonardofmds.clientesApi.dtos.ClienteResponseDto;
 import leonardofmds.clientesApi.dtos.EnderecoResponseDto;
@@ -22,6 +23,7 @@ import java.util.UUID;
 public class ClienteServiceImpl implements ClienteService {
 
     @Autowired ClienteRepository clienteRepository;
+    @Autowired RabbitMQProducerComponent rabbitMQProducerComponent;
 
 
     @Override
@@ -52,6 +54,8 @@ public class ClienteServiceImpl implements ClienteService {
             BeanUtils.copyProperties(e, enderecoResponseDto);
             response.getEnderecos().add(enderecoResponseDto);
         }
+
+        rabbitMQProducerComponent.sendMessage(response);
 
         return response;
     }
